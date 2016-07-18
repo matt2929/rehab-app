@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
     public void setChooseWorkoutView() {
         phoneButton2.setVisibility(View.VISIBLE);
         phoneButton1.setVisibility(View.VISIBLE);
-
+//googog
         phoneButton3.setVisibility(View.VISIBLE);
         phoneText.setText("Choose WorkoutSession Type");
         phoneButton1.setText("Manual WorkoutSession");
