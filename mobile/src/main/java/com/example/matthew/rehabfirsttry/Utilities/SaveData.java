@@ -65,7 +65,7 @@ SampleAverage sampleAverage = new SampleAverage();
                         csvWriter = new PrintWriter(new FileWriter(file, true));
                         int last = 0;
                         int count = 0;
-                        csvWriter.print(_workoutName+"\nTime,AccX,AccY,AccZ,AccT");
+                        csvWriter.print(_workoutName+"\nTime,AccX,AccY,AccZ,AccT,GyroX,GyroY,GyroZ");
                         csvWriter.append('\n');
                         for (int i = 0; i < string.length(); i++) {
                             if (string.charAt(i) == ';') {

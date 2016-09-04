@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="false">
     tools:context="com.example.matthew.rehabfirsttry.WorkoutInterface"
     tools:deviceIds="wear_round">
-
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,47 +19,119 @@
         android:textAlignment="center"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:textColor="@color/ambient_mode_text" />
+        android:textColor="@color/ambient_mode_text"
+        android:layout_above="@+id/wearwalk" />
 
     <Button
+        android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pick Up Count"
         android:id="@+id/wearwatchpickup"
-        android:layout_above="@+id/wearwalk"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/holo_red_dark"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/ambient_mode_text"
+        android:textAlignment="center" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Walk "
         android:id="@+id/wearwalk"
-        android:layout_above="@+id/wearholdup"
+        android:layout_below="@+id/wearwatchpickup"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_orange_dark"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/ambient_mode_text"
+        android:textAlignment="center" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hold Up Time"
         android:id="@+id/wearholdup"
-        android:layout_above="@+id/somethingbutton"
+        android:layout_below="@+id/wearwalk"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_orange_light"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/ambient_mode_text"
+        android:textAlignment="center" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="something"
-        android:id="@+id/somethingbutton"
-        android:layout_alignParentBottom="true"
+        android:text="Twist"
+        android:id="@+id/twistbutton"
+        android:layout_below="@+id/wearholdup"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" /><![CDATA[
-    />
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/ambient_mode_text"
+        android:textAlignment="center" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/moveupanddownbutton"
+        android:layout_below="@+id/twistbutton"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:text="Move up and down"
+        android:layout_margin="20dp"
+        android:background="@color/green"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/ambient_mode_text"
+        android:textAlignment="center" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pour Water"
+        android:id="@+id/pourwaterbutton"
+        android:layout_below="@+id/moveupanddownbutton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_purple"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/ambient_mode_text"
+        android:textAlignment="center" />
+    <com.example.matthew.rehabfirsttry.ballView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/AccX"
+        android:layout_below="@+id/watchworkouttext"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/accprog"
+        android:layout_below="@+id/AccX"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:max="100"
+        android:indeterminate="false"
+        android:layout_alignParentBottom="true" />
 
 
-    ]]>
 </RelativeLayout>
+ </ScrollView>
+

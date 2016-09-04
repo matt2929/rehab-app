@@ -23,31 +23,30 @@ public class Serialize implements Serializable {
     File dir;
     File file;
     public static boolean wasData = true;
-    private WorkoutHistoricalData workoutHistoricalData;
 
     public Serialize(Context c) throws IOException {
-        dir = new File(c.getFilesDir() + "/flappyBreath");
-        dir.mkdirs();
-        file = new File(dir, "rehabdata.txt");
+        dir = new File(c.getFilesDir() + "/serialisedRehab");
 
+        dir.mkdirs();
+        file = new File(dir, "BlockForTest2.txt");
         if (!file.exists()) {
             file.createNewFile();
             wasData = false;
         }
         context = c;
-        workoutHistoricalData = new WorkoutHistoricalData(getUsers(c));
-
     }
 
-    public void Save(Context context, String infoAboutActivity, double accuracy) {
-        FileOutputStream out;
+    public void Save(Context context, String name,int shakelist[],int grade,String extraString) {
+        //UserList ul = new UserList(a);
+ArrayList<WorkoutHistoricalData.WorkoutSession> arrayWork = getUsers(context);
+        FileOutputStream out = null;
         try {
             out = new FileOutputStream(file);
             ObjectOutputStream oout = new ObjectOutputStream(out);
             // write something in the file
-            workoutHistoricalData = new WorkoutHistoricalData(getUsers(context));
-            workoutHistoricalData.addWorkout(new WorkoutHistoricalData.WorkoutSession(accuracy, infoAboutActivity));
-            oout.writeObject(workoutHistoricalData);
+            arrayWork.add(0,new WorkoutHistoricalData.WorkoutSession(name,shakelist,name+extraString));
+            oout.writeObject(arrayWork);
+
             oout.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -56,6 +55,7 @@ public class Serialize implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public ArrayList<WorkoutHistoricalData.WorkoutSession> getUsers(Context c) {
@@ -70,32 +70,28 @@ public class Serialize implements Serializable {
 
 
         // UserList ul = null;
-        WorkoutHistoricalData ul = null;
+        ArrayList<WorkoutHistoricalData.WorkoutSession> ul = null;
 
         try {
             if (ois == null) {
-                ul = new WorkoutHistoricalData(new ArrayList<WorkoutHistoricalData.WorkoutSession>());
+                ul = new ArrayList<WorkoutHistoricalData.WorkoutSession>();
 
             } else {
-                ul = (WorkoutHistoricalData) ois.readObject();
+                ul = (ArrayList<WorkoutHistoricalData.WorkoutSession>) ois.readObject();
             }
         } catch (ClassNotFoundException e) {
-            ul = new WorkoutHistoricalData(new ArrayList<WorkoutHistoricalData.WorkoutSession>());
+            ul = new ArrayList<WorkoutHistoricalData.WorkoutSession>();
             e.printStackTrace();
         } catch (IOException e) {
-            ul = new WorkoutHistoricalData(new ArrayList<WorkoutHistoricalData.WorkoutSession>());
+            ul = new ArrayList<WorkoutHistoricalData.WorkoutSession>();
             e.printStackTrace();
         }
         if (ul != null) {
-            return ul.get_history();
-
+            return ul;
         } else {
             Toast.makeText(c, "null", Toast.LENGTH_LONG).show();
             return new ArrayList<WorkoutHistoricalData.WorkoutSession>();
         }
 
-
     }
-
-
-}
+    }

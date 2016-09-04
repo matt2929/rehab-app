@@ -90,9 +90,11 @@ GoogleApiClient.OnConnectionFailedListener failedListener = new GoogleApiClient.
                 String dataRaw = new String(byteBuffer.array());
                 dataField.setText("(" + dataRaw + ")");
                 if (dataRaw.equals("puttingincup")) {
+                    sendPhoneConformation();
                     amInCupView();
                 }
                 if (dataRaw.equals("workoutactivity")) {
+
                     Intent intent = new Intent(getApplicationContext(), WorkoutInterface.class);
                     startActivity(intent);
                 }
@@ -116,7 +118,22 @@ GoogleApiClient.OnConnectionFailedListener failedListener = new GoogleApiClient.
             }
         }).start();
     }
+    private void sendPhoneConformation() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+                if (mNode != null) {
+                    byte[] bytes = ("conformation".getBytes());
+
+                    Wearable.MessageApi.sendMessage(mGoogleApiClient, mNode.getId(),
+                            "/rehabwatchtophone", bytes).await();
+                } else {
+
+                }
+            }
+        }).start();
+    }
     public void lookAtPhoneView() {
         dataField.setText("See Phone");
     }

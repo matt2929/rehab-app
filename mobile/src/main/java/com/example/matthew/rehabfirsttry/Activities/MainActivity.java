@@ -2,6 +2,7 @@ package com.example.matthew.rehabfirsttry.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -78,6 +79,8 @@ public class MainActivity extends Activity {
                     phoneText.setBackgroundColor(Color.BLACK);
                     Intent intent = new Intent(getApplicationContext(), InsideCup.class);
                     startActivity(intent);
+                }else if(dataRaw.equals("conformation")){
+                    setPutMeInCupView();
                 }
             }
 
@@ -102,7 +105,7 @@ public class MainActivity extends Activity {
     }
 
     public void setPressStartView() {
-        phoneText.setText("Press Start When You Are Ready");
+        phoneText.setText("Press Start When The Watch Is On And Running The App");
         phoneButton1.setText("Start");
         phoneButton2.setVisibility(View.INVISIBLE);
         phoneButton1.setVisibility(View.VISIBLE);
@@ -119,7 +122,7 @@ public class MainActivity extends Activity {
     public void setChooseWorkoutView() {
         phoneButton2.setVisibility(View.VISIBLE);
         phoneButton1.setVisibility(View.VISIBLE);
-//googog
+
         phoneButton3.setVisibility(View.VISIBLE);
         phoneText.setText("Choose WorkoutSession Type");
         phoneButton1.setText("Manual WorkoutSession");
@@ -127,31 +130,68 @@ public class MainActivity extends Activity {
         phoneButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPutMeInCupView();
+                setChooseWorkoutNoConnectionView();
+                tellWatchPuttingInCup();
             }
         });
         phoneButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPutMeInCupView();
+                tellWatchPuttingInCup();
+                setChooseWorkoutNoConnectionView();
             }
         });
         phoneButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), History.class);
+
+                Intent intent = new Intent(getApplicationContext(), HistoryList.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void setChooseWorkoutNoConnectionView() {
+        phoneButton2.setVisibility(View.VISIBLE);
+        phoneButton1.setVisibility(View.VISIBLE);
+
+        phoneButton3.setVisibility(View.VISIBLE);
+        phoneText.setText(phoneText.getText()+"\n No Connection! Check Your Watch And Try Again");
+        phoneText.setTextColor(Color.RED);
+        phoneButton1.setText("Manual WorkoutSession");
+        phoneButton2.setText("Full WorkoutSession");
+        phoneButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                tellWatchPuttingInCup();
+            }
+        });
+
+        phoneButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                tellWatchPuttingInCup();
+            }
+        });
+        phoneButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), HistoryList.class);
                 startActivity(intent);
             }
         });
     }
 
     public void setPutMeInCupView() {
+        phoneText.setTextColor(Color.BLACK);
         phoneText.setText("Put Me In The Cup Than Press OK On Watch");
         phoneButton1.setVisibility(View.INVISIBLE);
         phoneButton2.setVisibility(View.INVISIBLE);
 
         phoneButton3.setVisibility(View.INVISIBLE);
-        tellWatchPuttingInCup();
+
     }
 
     public void setImInCupView() {

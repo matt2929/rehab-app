@@ -7,13 +7,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.matthew.rehabfirsttry.Activities.History">
+    tools:context=".Activities.HistoryList">
 
     <ListView
+        android:id="@+id/HistoryView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/HistoryView"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentTop="true" />
+
 </RelativeLayout>

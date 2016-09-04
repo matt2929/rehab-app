@@ -10,8 +10,8 @@ public class SampleAverage {
     public ArrayList<Float> smoothData = new ArrayList<Float>();
     public float BlockingAverage = 0;
     public float SmoothAverage = 0;
-    public int BlockingDataSize = 4;
-    public int SmoothingDataSize = 4;
+    public int BlockingDataSize = 5;
+    public int SmoothingDataSize = 5;
 
     public void addBlockingAverage(float a) {
         if (blockingData.size() < BlockingDataSize) {

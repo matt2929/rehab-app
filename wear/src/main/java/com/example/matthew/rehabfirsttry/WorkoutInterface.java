@@ -10,6 +10,7 @@ import android.support.wearable.view.WatchViewStub;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,6 +21,7 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,10 +29,15 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
     GoogleApiClient mGoogleApiClient;
     private Node mNode;
     private SensorManager mSensorManager;
-    Button pickUpCup, holdUpCup, walkWithCup, somthingButton;
+    Button pickUpCup, holdUpCup, walkWithCup, somthing1Button, somthing2Button, somthing3Button;
+    ArrayList<Button> AllButtons = new ArrayList<Button>();
     private float gyroX = 0, gyroY = 0, gyroZ = 0;
+    private int targetX = 0, targetY = 0;
     private Sensor mGyro;
+    ballView accXView, accYView, accZView;
+    private ProgressBar progressBar;
     private TextView mTextView;
+    ballView ballViewW;
     private boolean phoneWantsMyData = false;
     private int phoneSendSensorDataCount = 0, getPhoneSendSensorDataRate = 50;
 
@@ -44,37 +51,26 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                somthingButton = (Button) stub.findViewById(R.id.somethingbutton);
+                accXView = (ballView) stub.findViewById(R.id.AccX);
+                somthing1Button = (Button) stub.findViewById(R.id.twistbutton);
+                somthing2Button = (Button) stub.findViewById(R.id.moveupanddownbutton);
+                somthing3Button = (Button) stub.findViewById(R.id.pourwaterbutton);
                 pickUpCup = (Button) stub.findViewById(R.id.wearwatchpickup);
                 holdUpCup = (Button) stub.findViewById(R.id.wearholdup);
                 walkWithCup = (Button) stub.findViewById(R.id.wearwalk);
                 mTextView = (TextView) stub.findViewById(R.id.watchworkouttext);
-                pickUpCup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sendPhoneAMessage(MessagingValues.PICKUPCOUNT);
-                        phoneWantsMyData = true;
-                        howToHoldCupView("good");
-                    }
-                });
-                holdUpCup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sendPhoneAMessage(MessagingValues.PICKUPHOLD);
-                        phoneWantsMyData = true;
-                        howToHoldCupView("good");
+                progressBar = (ProgressBar) stub.findViewById(R.id.accprog);
+                AllButtons.add(somthing1Button);
+                AllButtons.add(somthing2Button);
+                AllButtons.add(somthing3Button);
+                AllButtons.add(pickUpCup);
+                AllButtons.add(holdUpCup);
+                AllButtons.add(walkWithCup);
 
-                    }
-                });
-                walkWithCup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sendPhoneAMessage(MessagingValues.WALKWITHCUP);
-                        phoneWantsMyData = true;
-                        howToHoldCupView("good");
 
-                    }
-                });
+
+                ballViewW = (ballView) stub.findViewById(R.id.AccX);
+                selectWorkoutView();
             }
         });
         mSensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
@@ -130,6 +126,18 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
                     mTextView.setText(dataRaw.split("\\,")[1]);
                 } else if (dataRaw.equals(MessagingValues.WORKOUTOVER)) {
                     selectWorkoutView();
+                } else if (dataRaw.split("\\,")[0].equals(MessagingValues.SENDPOSITIONAL)) {
+                    targetX = Integer.parseInt(dataRaw.split("\\,")[1]);
+                    targetY = Integer.parseInt(dataRaw.split("\\,")[2]);
+
+                } else if (dataRaw.split("\\,")[0].equals(MessagingValues.SENDPOSITIONALPROG)) {
+                    progressBar.setProgress((int) (Double.parseDouble(dataRaw.split("\\,")[1]) * 100));
+                    if (!dataRaw.split("\\,")[1].equals("0.0")) {
+                        ballViewW.isInPostion(true);
+                    } else {
+                        ballViewW.isInPostion(false);
+                    }
+
                 }
             }
         }
@@ -163,7 +171,15 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
                     gyroX = event.values[0];
                     gyroY = event.values[1];
                     gyroZ = event.values[2];
-                    mTextView.setText("X: " + gyroX + "\nY: " + gyroY + "\nZ: " + gyroZ);
+                    if (progressBar.getProgress() != 0) {
+                        accXView.updateDrawing(gyroX, gyroY, targetX, targetY);
+
+                    } else {
+                        accXView.updateDrawing(gyroX, gyroY, targetX, targetY);
+
+                    }
+
+                    mTextView.setText("\nTartget | Actual \nX: " + targetX + " | "+gyroX+"\nY: " + targetY + " | "+gyroY);
                     sendPhoneAMessage(MessagingValues.SENDGRAVITYDATA + "," + gyroX + "," + gyroY + "," + gyroZ);
 
                 }
@@ -178,23 +194,73 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
     }
 
     public void selectWorkoutView() {
+        ballViewW.setVisibility(View.INVISIBLE);
         mTextView.setText("");
-        pickUpCup.setVisibility(View.VISIBLE);
-        holdUpCup.setVisibility(View.VISIBLE);
-        walkWithCup.setVisibility(View.VISIBLE);
-        somthingButton.setVisibility(View.VISIBLE);
+        showAllButtons();
         mTextView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        pickUpCup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendPhoneAMessage(MessagingValues.PICKUPCOUNT);
+                phoneWantsMyData = true;
+                howToHoldCupView("good");
+            }
+        });
+        holdUpCup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendPhoneAMessage(MessagingValues.PICKUPHOLD);
+                phoneWantsMyData = true;
+                howToHoldCupView("good");
 
+            }
+        });
+        walkWithCup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+          //      sendPhoneAMessage(MessagingValues.WALKWITHCUP);
+            //    phoneWantsMyData = true;
+              //  howToHoldCupView("good");
+
+            }
+        });
+        somthing1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                sendPhoneAMessage(MessagingValues.TWISTCUP);
+  //              phoneWantsMyData = true;
+    //            howToHoldCupView("good");
+
+            }
+        });
+        somthing2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                sendPhoneAMessage(MessagingValues.UPANDDOWN);
+  //              phoneWantsMyData = true;
+    //            howToHoldCupView("good");
+            }
+        });
+        somthing3Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendPhoneAMessage(MessagingValues.POURWATER);
+                phoneWantsMyData=true;
+                howToHoldCupView("dank");
+            }
+        });
     }
 
     public void workoutInfoView() {
+        ballViewW.setVisibility(View.INVISIBLE);
         mTextView.setText("");
-        pickUpCup.setVisibility(View.GONE);
-        holdUpCup.setVisibility(View.GONE);
-        walkWithCup.setVisibility(View.GONE);
-        somthingButton.setVisibility(View.GONE);
+        hideAllButtons();
         mTextView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         pickUpCup.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
             }
@@ -213,10 +279,9 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
 
     public void howToHoldCupView(String message) {
         mTextView.setText("Hold It like This");
-        pickUpCup.setVisibility(View.GONE);
-        holdUpCup.setVisibility(View.GONE);
-        walkWithCup.setVisibility(View.GONE);
-        somthingButton.setVisibility(View.GONE);
+        hideAllButtons();
+        progressBar.setVisibility(View.VISIBLE);
+        ballViewW.setVisibility(View.VISIBLE);
         mTextView.setVisibility(View.VISIBLE);
 
         pickUpCup.setOnClickListener(new View.OnClickListener() {
@@ -235,5 +300,17 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             }
         });
 
+    }
+
+    public void hideAllButtons() {
+        for (Button b : AllButtons) {
+            b.setVisibility(View.GONE);
+        }
+    }
+
+    public void showAllButtons() {
+        for (Button b : AllButtons) {
+            b.setVisibility(View.VISIBLE);
+        }
     }
 }

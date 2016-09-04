@@ -9,36 +9,46 @@ import java.util.Calendar;
  */
 public class WorkoutHistoricalData implements Serializable {
     ArrayList<WorkoutSession> _history;
-    public WorkoutHistoricalData(ArrayList<WorkoutSession> history){
-        _history=history;
+
+    public WorkoutHistoricalData(ArrayList<WorkoutSession> history) {
+        _history = history;
     }
-    public void addWorkout(WorkoutSession ws){
-        _history.add(0,ws);
+
+    public void addWorkout(WorkoutSession ws) {
+        _history.add(ws);
     }
+
     public ArrayList<WorkoutSession> get_history() {
         return _history;
     }
 
     public static class WorkoutSession implements Serializable {
         public Calendar cal = Calendar.getInstance();
-        public double Accuracy = 100;
+        public int[] shakeList = new int[0];
         public String workoutInfo = "";
+        public String workoutName ="";
 
-        public WorkoutSession(double accuracy, String workoutinfo) {
+        public WorkoutSession(String workoutname,int[] shakelist, String workoutinfo) {
             workoutInfo = workoutinfo;
-            Accuracy = accuracy;
+            shakeList = shakelist;
+            workoutName=workoutname;
+
         }
 
         public Calendar get_Cal() {
             return cal;
         }
 
-        public double getAccuracy() {
-            return Accuracy;
+        public int[] getShakeList() {
+            return shakeList;
         }
 
         public String getWorkoutInfo() {
             return workoutInfo;
+        }
+
+        public String getWorkoutName() {
+            return workoutName;
         }
     }
 }
