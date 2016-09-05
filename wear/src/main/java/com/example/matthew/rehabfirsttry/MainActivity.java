@@ -140,14 +140,7 @@ GoogleApiClient.OnConnectionFailedListener failedListener = new GoogleApiClient.
 
 
     public void amInCupView() {
-        this.getCurrentFocus().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WorkoutInterface.class);
-                tellPhoneTurnOffScreen();
-                startActivity(intent);
-            }
-        });
+
         dataField.setText("When phone is in cup touch screen");
 
         dataField.setOnClickListener(new View.OnClickListener() {

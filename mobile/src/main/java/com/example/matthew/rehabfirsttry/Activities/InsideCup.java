@@ -44,10 +44,10 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
     GoogleApiClient mGoogleApiClient;
     private Node mNode;
     private SensorManager mSensorManager;
-    private float walkCount=0;
+    private float walkCount = 0;
     private float accX = 0, accY = 0, accZ = 0;
     private float gyroX = 0, gyroY = 0, gyroZ = 0;
-    private Sensor mAcc, mGyro,mStep;
+    private Sensor mAcc, mGyro, mStep;
     private TextView textView;
     AudioManager mgr = null;
     private WorkoutSession currentWorkout;
@@ -135,29 +135,26 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                 if (dataRaw.equals(MessagingValues.PICKUPCOUNT)) {
 
                     currentWorkout = new PickUpCount();
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
-                    sendAMessageToWatch(MessagingValues.SENDPOSITIONAL+","+currentWorkout.xPostiontDisplay()+","+currentWorkout.yPostiontDisplay()+","+currentWorkout.accuracyProgression());
+                    sendAMessageToWatch(MessagingValues.SENDPOSITIONAL + "," + currentWorkout.xPostiontDisplay() + "," + currentWorkout.yPostiontDisplay() + "," + currentWorkout.accuracyProgression());
                 } else if (dataRaw.equals(MessagingValues.PICKUPHOLD)) {
                     currentWorkout = new PickUpHold();
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
                 } else if (dataRaw.equals(MessagingValues.WALKWITHCUP)) {
                     currentWorkout = new WalkWithCup();
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
-                }else if(dataRaw.equals(MessagingValues.TWISTCUP)) {
+                } else if (dataRaw.equals(MessagingValues.TWISTCUP)) {
                     currentWorkout = new TwistCup();
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
-                }else if(dataRaw.equals(MessagingValues.UPANDDOWN)) {
+                } else if (dataRaw.equals(MessagingValues.UPANDDOWN)) {
                     currentWorkout = new PickUpPutDown();
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
-                }else if(dataRaw.equals(MessagingValues.LEFTHAND)) {
-                    leftHand=true;
-                }else if(dataRaw.equals(MessagingValues.RIGHTHAND)){
-                    leftHand=false;
+                } else if (dataRaw.equals(MessagingValues.LEFTHAND)) {
+                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
+                    leftHand = true;
+                } else if (dataRaw.equals(MessagingValues.RIGHTHAND)) {
+                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
+                    leftHand = false;
                 } else if (dataRaw.split("\\,")[0].equals(MessagingValues.SENDGRAVITYDATA)) {
                     float gravX = Float.parseFloat(dataRaw.split("\\,")[1]);
                     float gravY = Float.parseFloat(dataRaw.split("\\,")[2]);
@@ -165,15 +162,15 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                     textView.setText("Watch Data\nX: " + gravX + "\nY: " + gravY + "\nZ: " + gravZ);
                     if (currentWorkout != null) {
                         if (currentWorkout.saveGripPosition(gravX, gravY, gravZ)) {
-                            tts.speak("You held the cup correctly."+currentWorkout.sayHowToHoldCup(), TextToSpeech.QUEUE_ADD, null);
+                            tts.speak("You held the cup correctly." + currentWorkout.sayHowToHoldCup(), TextToSpeech.QUEUE_ADD, null);
 
                             sendAMessageToWatch(MessagingValues.HOLDINGISACCURATE);
                             workoutInProgress = true;
-                        }else{
-                            sendAMessageToWatch(MessagingValues.SENDPOSITIONALPROG+","+currentWorkout.accuracyProgression());
+                        } else {
+                            sendAMessageToWatch(MessagingValues.SENDPOSITIONALPROG + "," + currentWorkout.accuracyProgression());
                         }
                     }
-                }else if(dataRaw.equals(MessagingValues.POURWATER)){
+                } else if (dataRaw.equals(MessagingValues.POURWATER)) {
                     currentWorkout = new PourCup();
                     tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
@@ -211,8 +208,8 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
             gyroX = event.values[0];
             gyroY = event.values[1];
             gyroZ = event.values[2];
-        }else if (sensor.getType()==Sensor.TYPE_STEP_COUNTER){
-            walkCount=event.values[0];
+        } else if (sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
+            walkCount = event.values[0];
         }
         if (workoutInProgress) {
 
@@ -231,7 +228,7 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                 lastValue = accY;
 
 
-                currentWorkout.dataIn(accX, accY, accZ, gyroX, gyroY, gyroZ, (int) walkCount,getApplicationContext());
+                currentWorkout.dataIn(accX, accY, accZ, gyroX, gyroY, gyroZ, (int) walkCount, getApplicationContext());
                 //Should App Talk?
                 if (currentWorkout.shouldISaySomething()) {
                     tts.speak(currentWorkout.whatToSay(), TextToSpeech.QUEUE_ADD, null);
@@ -242,21 +239,21 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
 
                 saveString +=
                         +hour + ":" + minute + ":" + second
-                                + "," + accX + "," + accY + "," + accZ + ","+sampleAverage.getMedianAverage()+","
-                                 + gyroX + "," + gyroY + "," + gyroZ + ";";
+                                + "," + accX + "," + accY + "," + accZ + "," + sampleAverage.getMedianAverage() + ","
+                                + gyroX + "," + gyroY + "," + gyroZ + ";";
                 sendAMessageToWatch(MessagingValues.WORKOUTDISPLAYDATA + ",\n\n\n\n" + currentWorkout.result());
                 sendWorkoutStringToWatchCount = 0;
             }
             //Save Game
             if (currentWorkout.workoutFinished()) {
                 tts.speak("Workout Complete.", TextToSpeech.QUEUE_ADD, null);
-                tts.speak(currentWorkout.getGrade()+"%", TextToSpeech.QUEUE_ADD, null);
+                tts.speak(currentWorkout.getGrade() + "%", TextToSpeech.QUEUE_ADD, null);
 
                 saveData.saveData(saveString);
                 try {
                     Serialize serialize = new Serialize(getApplicationContext());
-                    serialize.Save(getApplicationContext(), currentWorkout.getWorkoutName(), currentWorkout.ShakeNum(),currentWorkout.getGrade(),leftHand,currentWorkout.saveData());
-                   Toast.makeText(getApplicationContext(),""+currentWorkout.getGrade()+"%",Toast.LENGTH_LONG).show();
+                    serialize.Save(getApplicationContext(), currentWorkout.getWorkoutName(), currentWorkout.ShakeNum(), currentWorkout.getGrade(), leftHand, currentWorkout.saveData());
+                    Toast.makeText(getApplicationContext(), "" + currentWorkout.getGrade() + "%", Toast.LENGTH_LONG).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();

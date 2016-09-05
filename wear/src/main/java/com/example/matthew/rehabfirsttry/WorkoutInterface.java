@@ -205,22 +205,34 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 leftHand = true;
+                sendPhoneAMessage(MessagingValues.LEFTHAND);
                 selectWorkoutView();
+                phoneWantsMyData = true;
                 sendPhoneAMessage(MessagingValues.PICKUPHOLD);
+                howToHoldCupView("Please Dont Move");
+
             }
         });
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                sendPhoneAMessage(MessagingValues.RIGHTHAND);
                 leftHand = false;
                 selectWorkoutView();
+                phoneWantsMyData = true;
                 sendPhoneAMessage(MessagingValues.PICKUPHOLD);
+                howToHoldCupView("Please Dont Move");
+
             }
         });
     }
 
     public void selectWorkoutView() {
+
         ballViewW.setVisibility(View.INVISIBLE);
+        leftButton.setVisibility(View.GONE);
+        rightButton.setVisibility(View.GONE);
         mTextView.setText("");
         showAllButtons();
         mTextView.setVisibility(View.INVISIBLE);
@@ -229,8 +241,6 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 sendPhoneAMessage(MessagingValues.PICKUPCOUNT);
-                phoneWantsMyData = true;
-                howToHoldCupView("good");
                 leftOrRightHand();
             }
         });
@@ -238,8 +248,6 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 sendPhoneAMessage(MessagingValues.PICKUPHOLD);
-                phoneWantsMyData = true;
-                howToHoldCupView("good");
                 leftOrRightHand();
             }
         });
@@ -247,34 +255,26 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 //      sendPhoneAMessage(MessagingValues.WALKWITHCUP);
-                //    phoneWantsMyData = true;
-                //  howToHoldCupView("good");
-//leftOrRightHand();
+               leftOrRightHand();
             }
         });
         somthing1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                sendPhoneAMessage(MessagingValues.TWISTCUP);
-                //              phoneWantsMyData = true;
-                //            howToHoldCupView("good");
-//leftOrRightHand();
+               //leftOrRightHand();
             }
         });
         somthing2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                sendPhoneAMessage(MessagingValues.UPANDDOWN);
-                //              phoneWantsMyData = true;
-                //            howToHoldCupView("good");
-            }
+                  }
         });
         somthing3Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendPhoneAMessage(MessagingValues.POURWATER);
-                phoneWantsMyData = true;
-                howToHoldCupView("dank");
                 leftOrRightHand();
             }
         });
