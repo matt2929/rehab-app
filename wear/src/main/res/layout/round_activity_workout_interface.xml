@@ -131,6 +131,22 @@
         android:indeterminate="false"
         android:layout_alignParentBottom="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Left Hand"
+        android:id="@+id/lefthandbutt"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Right Hand"
+        android:id="@+id/righthandbutt"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>
  </ScrollView>

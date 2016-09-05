@@ -35,9 +35,11 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
     private int targetX = 0, targetY = 0;
     private Sensor mGyro;
     ballView accXView, accYView, accZView;
+    public static boolean leftHand = false;
     private ProgressBar progressBar;
     private TextView mTextView;
     ballView ballViewW;
+    Button leftButton, rightButton;
     private boolean phoneWantsMyData = false;
     private int phoneSendSensorDataCount = 0, getPhoneSendSensorDataRate = 50;
 
@@ -51,6 +53,8 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
+                leftButton = (Button) stub.findViewById(R.id.lefthandbutt);
+                rightButton = (Button) stub.findViewById(R.id.righthandbutt);
                 accXView = (ballView) stub.findViewById(R.id.AccX);
                 somthing1Button = (Button) stub.findViewById(R.id.twistbutton);
                 somthing2Button = (Button) stub.findViewById(R.id.moveupanddownbutton);
@@ -66,7 +70,6 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
                 AllButtons.add(pickUpCup);
                 AllButtons.add(holdUpCup);
                 AllButtons.add(walkWithCup);
-
 
 
                 ballViewW = (ballView) stub.findViewById(R.id.AccX);
@@ -179,7 +182,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
 
                     }
 
-                    mTextView.setText("\nTartget | Actual \nX: " + targetX + " | "+gyroX+"\nY: " + targetY + " | "+gyroY);
+                    mTextView.setText("\nTartget | Actual \nX: " + targetX + " | " + gyroX + "\nY: " + targetY + " | " + gyroY);
                     sendPhoneAMessage(MessagingValues.SENDGRAVITYDATA + "," + gyroX + "," + gyroY + "," + gyroZ);
 
                 }
@@ -191,6 +194,27 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+
+    public void leftOrRightHand() {
+        hideAllButtons();
+        leftButton.setVisibility(View.VISIBLE);
+        rightButton.setVisibility(View.VISIBLE);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                leftHand = true;
+                selectWorkoutView();
+            }
+        });
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                leftHand = false;
+                selectWorkoutView();
+            }
+        });
     }
 
     public void selectWorkoutView() {
@@ -205,6 +229,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
                 sendPhoneAMessage(MessagingValues.PICKUPCOUNT);
                 phoneWantsMyData = true;
                 howToHoldCupView("good");
+                leftOrRightHand();
             }
         });
         holdUpCup.setOnClickListener(new View.OnClickListener() {
@@ -213,41 +238,42 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
                 sendPhoneAMessage(MessagingValues.PICKUPHOLD);
                 phoneWantsMyData = true;
                 howToHoldCupView("good");
-
+                leftOrRightHand();
             }
         });
         walkWithCup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-          //      sendPhoneAMessage(MessagingValues.WALKWITHCUP);
-            //    phoneWantsMyData = true;
-              //  howToHoldCupView("good");
-
+                //      sendPhoneAMessage(MessagingValues.WALKWITHCUP);
+                //    phoneWantsMyData = true;
+                //  howToHoldCupView("good");
+//leftOrRightHand();
             }
         });
         somthing1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                sendPhoneAMessage(MessagingValues.TWISTCUP);
-  //              phoneWantsMyData = true;
-    //            howToHoldCupView("good");
-
+                //              phoneWantsMyData = true;
+                //            howToHoldCupView("good");
+//leftOrRightHand();
             }
         });
         somthing2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                sendPhoneAMessage(MessagingValues.UPANDDOWN);
-  //              phoneWantsMyData = true;
-    //            howToHoldCupView("good");
+                //              phoneWantsMyData = true;
+                //            howToHoldCupView("good");
             }
         });
         somthing3Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendPhoneAMessage(MessagingValues.POURWATER);
-                phoneWantsMyData=true;
+                phoneWantsMyData = true;
                 howToHoldCupView("dank");
+                leftOrRightHand();
             }
         });
     }
