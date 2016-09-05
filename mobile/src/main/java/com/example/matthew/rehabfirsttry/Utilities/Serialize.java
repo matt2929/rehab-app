@@ -36,7 +36,7 @@ public class Serialize implements Serializable {
         context = c;
     }
 
-    public void Save(Context context, String name,int shakelist[],int grade,String extraString) {
+    public void Save(Context context, String name,int shakelist[],int grade,boolean leftHand,String extraString) {
         //UserList ul = new UserList(a);
 ArrayList<WorkoutHistoricalData.WorkoutSession> arrayWork = getUsers(context);
         FileOutputStream out = null;
@@ -44,9 +44,9 @@ ArrayList<WorkoutHistoricalData.WorkoutSession> arrayWork = getUsers(context);
             out = new FileOutputStream(file);
             ObjectOutputStream oout = new ObjectOutputStream(out);
             // write something in the file
-            arrayWork.add(0,new WorkoutHistoricalData.WorkoutSession(name,shakelist,name+extraString));
+            //String workoutname, int[] shakelist, String workoutinfo, int grade, boolean leftHand
+            arrayWork.add(0,new WorkoutHistoricalData.WorkoutSession(name,shakelist,name+extraString,grade,leftHand));
             oout.writeObject(arrayWork);
-
             oout.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

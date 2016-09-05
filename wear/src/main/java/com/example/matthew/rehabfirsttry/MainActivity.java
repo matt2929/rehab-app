@@ -138,7 +138,7 @@ GoogleApiClient.OnConnectionFailedListener failedListener = new GoogleApiClient.
         dataField.setText("See Phone");
     }
 
-x
+
     public void amInCupView() {
         this.getCurrentFocus().setOnClickListener(new View.OnClickListener() {
             @Override

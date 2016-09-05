@@ -22,17 +22,23 @@ public class WorkoutHistoricalData implements Serializable {
         return _history;
     }
 
+    public boolean leftHand = false;
+    public int grade = 0;
+
     public static class WorkoutSession implements Serializable {
         public Calendar cal = Calendar.getInstance();
         public int[] shakeList = new int[0];
         public String workoutInfo = "";
-        public String workoutName ="";
+        public String workoutName = "";
+        public boolean LeftHand = false;
+        public int Grade = 0;
 
-        public WorkoutSession(String workoutname,int[] shakelist, String workoutinfo) {
+        public WorkoutSession(String workoutname, int[] shakelist, String workoutinfo, int grade, boolean leftHand) {
             workoutInfo = workoutinfo;
             shakeList = shakelist;
-            workoutName=workoutname;
-
+            workoutName = workoutname;
+            LeftHand=leftHand;
+            Grade=grade;
         }
 
         public Calendar get_Cal() {
@@ -50,5 +56,14 @@ public class WorkoutHistoricalData implements Serializable {
         public String getWorkoutName() {
             return workoutName;
         }
+
+        public int getGrade() {
+            return Grade;
+        }
+
+        public boolean isLeftHand() {
+            return LeftHand;
+        }
     }
+
 }

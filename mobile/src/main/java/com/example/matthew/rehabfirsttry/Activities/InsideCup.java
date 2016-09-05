@@ -55,7 +55,7 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
     private int sendWorkoutStringToWatchCount = 0, getSendWorkoutStringToWatchMax = 30;
     private float lastValue = 10;
     private SampleAverage sampleAverage = new SampleAverage();
-
+    private boolean leftHand = false;
     TextToSpeech tts;
     String saveString = "";
 
@@ -150,11 +150,14 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                     currentWorkout = new TwistCup();
                     tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
-                }else if(dataRaw.equals(MessagingValues.UPANDDOWN)){
+                }else if(dataRaw.equals(MessagingValues.UPANDDOWN)) {
                     currentWorkout = new PickUpPutDown();
                     tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
-
+                }else if(dataRaw.equals(MessagingValues.LEFTHAND)) {
+                    leftHand=true;
+                }else if(dataRaw.equals(MessagingValues.RIGHTHAND)){
+                    leftHand=false;
                 } else if (dataRaw.split("\\,")[0].equals(MessagingValues.SENDGRAVITYDATA)) {
                     float gravX = Float.parseFloat(dataRaw.split("\\,")[1]);
                     float gravY = Float.parseFloat(dataRaw.split("\\,")[2]);
@@ -252,7 +255,7 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                 saveData.saveData(saveString);
                 try {
                     Serialize serialize = new Serialize(getApplicationContext());
-                    serialize.Save(getApplicationContext(), currentWorkout.getWorkoutName(), currentWorkout.ShakeNum(),currentWorkout.getGrade(),currentWorkout.saveData());
+                    serialize.Save(getApplicationContext(), currentWorkout.getWorkoutName(), currentWorkout.ShakeNum(),currentWorkout.getGrade(),leftHand,currentWorkout.saveData());
                    Toast.makeText(getApplicationContext(),""+currentWorkout.getGrade()+"%",Toast.LENGTH_LONG).show();
 
                 } catch (IOException e) {

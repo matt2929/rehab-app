@@ -206,6 +206,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             public void onClick(View view) {
                 leftHand = true;
                 selectWorkoutView();
+                sendPhoneAMessage(MessagingValues.PICKUPHOLD);
             }
         });
         rightButton.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +214,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             public void onClick(View view) {
                 leftHand = false;
                 selectWorkoutView();
+                sendPhoneAMessage(MessagingValues.PICKUPHOLD);
             }
         });
     }

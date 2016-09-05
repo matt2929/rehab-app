@@ -16,4 +16,6 @@ public class MessagingValues {
     public static final String SENDPOSITIONAL = "sendpositonal";
     public static final String SENDPOSITIONALPROG = "sendaccuracyprgression";
     public static final String POURWATER= "pourwater";
+    public static final String LEFTHAND = "lefthand";
+    public static final String RIGHTHAND = "righthand";
 }
