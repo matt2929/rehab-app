@@ -62,14 +62,14 @@ public class PickUpHold implements WorkoutSession {
                 whatToSay = "hold the cup above your head";
                 pickupAnnounce = true;
             }
-            if (differenceTime > 5000) {
+            if (differenceTime > 10000) {
                 workoutStarted = true;
-                whatToSay = "Countdown Started";
+                whatToSay = ",Begin Workout Please";
                 shouldITalk = true;
                 startTime = System.currentTimeMillis();
             }
         } else {
-            if (differenceTime > 30000) {
+            if (differenceTime > 25000) {
                 return true;
 
             }
@@ -159,6 +159,6 @@ public class PickUpHold implements WorkoutSession {
 
     @Override
     public String sayHowToHoldCup() {
-        return "hold the cup above your head, hold it as still as possible.";
+        return "hold the cup above your head, please hold it as still as possible";
     }
 }
