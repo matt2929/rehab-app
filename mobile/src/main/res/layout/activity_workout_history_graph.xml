@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.matthew.rehabfirsttry.Activities.HistoryGraph">
+
+    <com.example.matthew.rehabfirsttry.Activities.GraphDataView
+        android:id="@+id/GraphData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pointInfo"
+        android:layout_above="@+id/line" />
+
+    <ListView
+        android:id="@+id/datalist"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/setDataDuration" />
+
+    <TextView
+        android:id="@+id/pointInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Point Selected" />
+
+
+    <CheckBox
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:checked="false"
+        android:text="Line"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/setDataDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duration\nAll"
+        android:layout_below="@+id/GraphData"
+        android:layout_toEndOf="@+id/line" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shake Type\nAll"
+        android:id="@+id/setDataType"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/datalist"
+        android:layout_below="@+id/GraphData" />
+
+</RelativeLayout>
+
