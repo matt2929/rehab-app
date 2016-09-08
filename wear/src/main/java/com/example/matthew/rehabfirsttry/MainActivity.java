@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.wearable.view.WatchViewStub;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,7 +24,7 @@ import java.util.List;
 public class MainActivity extends Activity {
     GoogleApiClient mGoogleApiClient;
     private Node mNode;
-    TextView dataField;
+    Button dataField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                dataField = (TextView) stub.findViewById(R.id.weartext);
+                dataField = (Button) stub.findViewById(R.id.weartext);
             }
         });
         mGoogleApiClient = new GoogleApiClient.Builder(this)
