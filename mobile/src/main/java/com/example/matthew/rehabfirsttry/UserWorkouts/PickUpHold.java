@@ -1,6 +1,7 @@
 package com.example.matthew.rehabfirsttry.UserWorkouts;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.matthew.rehabfirsttry.Utilities.GripAnalysis;
 import com.example.matthew.rehabfirsttry.Utilities.WorkoutShakeTrack;
@@ -24,6 +25,9 @@ public class PickUpHold implements WorkoutSession {
     int errors = 0;
     GripAnalysis gripAnalysis = new GripAnalysis();
     WorkoutShakeTrack workoutShakeTrack = new WorkoutShakeTrack();
+    long StartTime = System.currentTimeMillis();
+    int startGoal = 12500;
+    boolean startedWork = false;
 
     public PickUpHold() {
 
@@ -32,9 +36,22 @@ public class PickUpHold implements WorkoutSession {
     @Override
     public void dataIn(float accX, float accY, float accZ, float gravX, float gravY, float gravZ, int walkingCount, Context context) {
 
-        workoutShakeTrack.analyseData(accX, accY, accZ);
-        float differenceVAL = Math.abs(accY - countPickupLastVal);
-        holdAccuracy(accX, accY, accZ);
+        if (Math.abs(StartTime - System.currentTimeMillis()) > startGoal) {
+            if (startedWork == false) {
+                startedWork = true;
+                whatToSay = "Please Begin ";
+                shouldITalk = true;
+        workoutStarted=true;
+                Log.e("said", "it");
+            } else {
+
+                workoutShakeTrack.analyseData(accX, accY, accZ);
+                float differenceVAL = Math.abs(accY - countPickupLastVal);
+                holdAccuracy(accX, accY, accZ);
+            }
+        }else{
+            startTime=System.currentTimeMillis();
+        }
     }
 
     @Override
@@ -57,17 +74,6 @@ public class PickUpHold implements WorkoutSession {
 
         val = differenceTime;
         if (!workoutStarted) {
-            if (pickupAnnounce = false) {
-                shouldITalk = true;
-                whatToSay = "hold the cup above your head";
-                pickupAnnounce = true;
-            }
-            if (differenceTime > 10000) {
-                workoutStarted = true;
-                whatToSay = ",Begin Workout Please";
-                shouldITalk = true;
-                startTime = System.currentTimeMillis();
-            }
         } else {
             if (differenceTime > 25000) {
                 return true;
@@ -86,12 +92,12 @@ public class PickUpHold implements WorkoutSession {
     @Override
     public String result() {
 
-        return "\n\n\nPickup Held" + val;
+        return "\n\n\nHeld " + val /1000+" sec";
     }
 
     @Override
     public boolean saveGripPosition(float gravX, float gravY, float gravZ) {
-        return gripAnalysis.saveGripPosition(gravX, gravY, gravZ);
+        return true;
     }
 
 
@@ -125,13 +131,13 @@ public class PickUpHold implements WorkoutSession {
 
     @Override
     public int getGrade() {
-        if(workoutShakeTrack.getShakeCount()[0]<=100){
+        if (workoutShakeTrack.getShakeCount()[0] <= 100) {
             return 100;
-        }else{
-            if(100-(Math.abs(workoutShakeTrack.getShakeCount()[0]-100)/2)<=0){
+        } else {
+            if (100 - (Math.abs(workoutShakeTrack.getShakeCount()[0] - 100) / 2) <= 0) {
                 return 0;
-            }else{
-                return 100-((workoutShakeTrack.getShakeCount()[0]-100)/2);
+            } else {
+                return 100 - ((workoutShakeTrack.getShakeCount()[0] - 100) / 2);
             }
         }
 
@@ -159,6 +165,6 @@ public class PickUpHold implements WorkoutSession {
 
     @Override
     public String sayHowToHoldCup() {
-        return "hold the cup above your head, please hold it as still as possible";
+        return "In this workout you will hold the cup above your head and try to move as little as possible. Start when I say Please Begin";
     }
 }
