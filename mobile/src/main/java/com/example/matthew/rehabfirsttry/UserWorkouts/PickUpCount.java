@@ -27,8 +27,10 @@ public class PickUpCount implements WorkoutSession {
     double collisionNumber = 0;
     float a = 0;
     boolean imOnLowerSurface = true;
+    long StartTime=System.currentTimeMillis();
     ArrayList<String> stringsIHaveSaid = new ArrayList<>();
     double totaldatas = 0;
+    boolean startedWork=false;
     GripAnalysis gripAnalysis = new GripAnalysis();
     boolean inMotion = false;
     boolean hasStarted = false;
@@ -39,25 +41,35 @@ public class PickUpCount implements WorkoutSession {
     }
 
     public void dataIn(float accX, float accY, float accZ, float gravX, float gravY, float gravZ, int walkingCount, Context context) {
-        workoutShakeTrack.analyseData(accX, accY, accZ);
-        float differenceVAL = Math.abs(accY - countPickupLastVal);
-        a = differenceVAL;
-        countPickupLastVal = accY;
-        sampleAverage.addSmoothAverage(differenceVAL);
-        Time nowTime = new Time();
-        nowTime.setToNow();
-        holdAccuracy(accX, accY, accZ);
-        long differenceTime = Math.abs(nowTime.toMillis(true) - startTime.toMillis(true));
-        if (sampleAverage.getMedianAverage() < .22 && differenceTime > 2000 && inMotion) {
-            startTime.setToNow();
-            shouldITalk = true;
-            pickupCount++;
-            whatToSay = "" + pickupCount;
-            inMotion = false;
-            imOnLowerSurface = !imOnLowerSurface;
-        } else if (sampleAverage.getMedianAverage() > .5 && !inMotion) {
-            inMotion = true;
-        }
+
+        if (Math.abs(StartTime - System.currentTimeMillis()) > 13500) {
+            if (startedWork == false) {
+                startedWork = true;
+                whatToSay="Please Begin";
+                shouldITalk=true;
+                Log.e("said","it");
+            } else {
+
+                workoutShakeTrack.analyseData(accX, accY, accZ);
+                float differenceVAL = Math.abs(accY - countPickupLastVal);
+                a = differenceVAL;
+                countPickupLastVal = accY;
+                sampleAverage.addSmoothAverage(differenceVAL);
+                Time nowTime = new Time();
+                nowTime.setToNow();
+                holdAccuracy(accX, accY, accZ);
+                long differenceTime = Math.abs(nowTime.toMillis(true) - startTime.toMillis(true));
+                if (sampleAverage.getMedianAverage() < .22 && differenceTime > 2000 && inMotion) {
+                    startTime.setToNow();
+                    shouldITalk = true;
+                    pickupCount++;
+                    whatToSay = "" + pickupCount;
+                    inMotion = false;
+                    imOnLowerSurface = !imOnLowerSurface;
+                } else if (sampleAverage.getMedianAverage() > .5 && !inMotion) {
+                    inMotion = true;
+                }
+            }}
     }
 
     @Override
@@ -101,12 +113,7 @@ public class PickUpCount implements WorkoutSession {
 
     @Override
     public boolean saveGripPosition(float gravX, float gravY, float gravZ) {
-        if(gripAnalysis.saveGripPosition(gravX, gravY, gravZ)){
-            startOfWorkoutForGrade=System.currentTimeMillis();
             return true;
-        }
-        return false;
-
     }
 
 
@@ -159,7 +166,7 @@ public class PickUpCount implements WorkoutSession {
 
     @Override
     public String sayHowToHoldCup() {
-        return "Put the cup above your head then back onto the table.";
+        return "In this workout you will put the cup above your head and back onto the table. Be sure to let it sit on the table and when I count pick up the cup again. Start when I say please begin";
     }
 
 }

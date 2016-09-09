@@ -150,10 +150,10 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                     currentWorkout = new PickUpPutDown();
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
                 } else if (dataRaw.equals(MessagingValues.LEFTHAND)) {
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
+                   // tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     leftHand = true;
                 } else if (dataRaw.equals(MessagingValues.RIGHTHAND)) {
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
+                    ///tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     leftHand = false;
                 } else if (dataRaw.split("\\,")[0].equals(MessagingValues.SENDGRAVITYDATA)) {
                     float gravX = Float.parseFloat(dataRaw.split("\\,")[1]);
@@ -162,7 +162,7 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                     textView.setText("Watch Data\nX: " + gravX + "\nY: " + gravY + "\nZ: " + gravZ);
                     if (currentWorkout != null) {
                         if (currentWorkout.saveGripPosition(gravX, gravY, gravZ)) {
-                            tts.speak("You held the cup correctly." + currentWorkout.sayHowToHoldCup(), TextToSpeech.QUEUE_ADD, null);
+                            tts.speak(""+currentWorkout.sayHowToHoldCup(), TextToSpeech.QUEUE_ADD, null);
 
                             sendAMessageToWatch(MessagingValues.HOLDINGISACCURATE);
                             workoutInProgress = true;
@@ -172,7 +172,7 @@ public class InsideCup extends Activity implements SensorEventListener, TextToSp
                     }
                 } else if (dataRaw.equals(MessagingValues.POURWATER)) {
                     currentWorkout = new PourCup();
-                    tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
+                    //tts.speak("Hold the cup and remain still.", TextToSpeech.QUEUE_ADD, null);
                     saveData = new SaveData(getApplicationContext(), currentWorkout.getWorkoutName());
                 }
             }
