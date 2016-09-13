@@ -42,7 +42,7 @@ public class PickUpCount implements WorkoutSession {
 
     public void dataIn(float accX, float accY, float accZ, float gravX, float gravY, float gravZ, int walkingCount, Context context) {
 
-        if (Math.abs(StartTime - System.currentTimeMillis()) > 13500) {
+        if (Math.abs(StartTime - System.currentTimeMillis()) > 10000) {
             if (startedWork == false) {
                 startedWork = true;
                 whatToSay="Please Begin";

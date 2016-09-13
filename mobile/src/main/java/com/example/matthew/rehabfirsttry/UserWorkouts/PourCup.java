@@ -19,7 +19,7 @@ public class PourCup implements WorkoutSession {
     boolean mediaChecked = false;
     boolean startedWork = false;
     boolean outOfSpace = false;
-    int startGoal=135000;
+    int startGoal=13500;
     double AccX = 0, AccY = 0;
     WorkoutShakeTrack workoutShakeTrack = new WorkoutShakeTrack();
     boolean shouldISpeak = false;

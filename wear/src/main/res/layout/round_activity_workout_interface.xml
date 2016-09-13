@@ -132,17 +132,17 @@
         android:layout_alignParentBottom="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:text="Left Hand"
+        android:layout_width="120dp"
+        android:layout_height="250dp"
+        android:text="&lt;-Left Hand"
         android:id="@+id/lefthandbutt"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:text="Right Hand"
+        android:layout_width="120dp"
+        android:layout_height="250dp"
+        android:text="Right Hand->"
         android:id="@+id/righthandbutt"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
