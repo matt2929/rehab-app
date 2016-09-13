@@ -39,7 +39,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
     private ProgressBar progressBar;
     private TextView mTextView;
     ballView ballViewW;
-    Button leftButton, rightButton;
+    Button leftButton, rightButton,pictureButton;
     private boolean phoneWantsMyData = false;
     private int phoneSendSensorDataCount = 0, getPhoneSendSensorDataRate = 50;
 
@@ -55,6 +55,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             public void onLayoutInflated(WatchViewStub stub) {
                 leftButton = (Button) stub.findViewById(R.id.lefthandbutt);
                 rightButton = (Button) stub.findViewById(R.id.righthandbutt);
+                pictureButton = (Button) stub.findViewById(R.id.exampleCupHold);
                 accXView = (ballView) stub.findViewById(R.id.AccX);
                 somthing1Button = (Button) stub.findViewById(R.id.twistbutton);
                 somthing2Button = (Button) stub.findViewById(R.id.moveupanddownbutton);
@@ -82,7 +83,6 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
             mGyro = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
             mSensorManager.registerListener(this, mGyro, Sensor.TYPE_GRAVITY);
         } else {
-
         }
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
@@ -179,12 +179,9 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
 
                     } else {
                         accXView.updateDrawing(gyroX, gyroY, targetX, targetY);
-
                     }
-
                     mTextView.setText("\nTartget | Actual \nX: " + targetX + " | " + gyroX + "\nY: " + targetY + " | " + gyroY);
                     sendPhoneAMessage(MessagingValues.SENDGRAVITYDATA + "," + gyroX + "," + gyroY + "," + gyroZ);
-
                 }
                 phoneSendSensorDataCount = 0;
             }
@@ -199,6 +196,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
 
     public void leftOrRightHand() {
         hideAllButtons();
+        pictureButton.setVisibility(View.VISIBLE);
         leftButton.setVisibility(View.VISIBLE);
         rightButton.setVisibility(View.VISIBLE);
         leftButton.setOnClickListener(new View.OnClickListener() {
@@ -215,19 +213,23 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 sendPhoneAMessage(MessagingValues.RIGHTHAND);
                 leftHand = false;
                 selectWorkoutView();
                 phoneWantsMyData = true;
                 howToHoldCupView("Please Dont Move");
-
+            }
+        });
+        pictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pictureButton.setVisibility(View.GONE);
             }
         });
     }
 
     public void selectWorkoutView() {
-
+        pictureButton.setVisibility(View.GONE);
         ballViewW.setVisibility(View.INVISIBLE);
         leftButton.setVisibility(View.GONE);
         rightButton.setVisibility(View.GONE);
@@ -279,6 +281,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
     }
 
     public void workoutInfoView() {
+        pictureButton.setVisibility(View.GONE);
         ballViewW.setVisibility(View.INVISIBLE);
         mTextView.setText("");
         hideAllButtons();
@@ -304,6 +307,7 @@ public class WorkoutInterface extends Activity implements SensorEventListener {
     }
 
     public void howToHoldCupView(String message) {
+        pictureButton.setVisibility(View.GONE);
         mTextView.setText("Hold It like This");
         hideAllButtons();
         progressBar.setVisibility(View.VISIBLE);

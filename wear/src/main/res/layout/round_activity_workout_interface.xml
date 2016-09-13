@@ -147,6 +147,20 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please Hold Like This\n(Tap to continue)"
+        android:id="@+id/exampleCupHold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/piccup"
+        android:textColor="@color/ambient_mode_text"
+        android:textColorHighlight="@color/blue"
+        android:textColorHint="@color/black"
+        android:layout_alignBottom="@+id/wearholdup" />
+
 
 </RelativeLayout>
  </ScrollView>
