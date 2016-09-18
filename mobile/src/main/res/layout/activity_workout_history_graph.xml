@@ -7,30 +7,29 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.matthew.rehabfirsttry.Activities.HistoryGraph">
+    tools:context="com.example.matthew.rehabfirsttry.Activities.HistoryGraph"
+    >
 
-    <com.example.matthew.rehabfirsttry.Activities.GraphDataView
-        android:id="@+id/GraphData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/pointInfo"
-        android:layout_above="@+id/line" />
+   
 
     <ListView
         android:id="@+id/datalist"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="175dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/setDataDuration" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/pointInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Point Selected" />
+        android:text="No Point Selected"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/textView"
+        android:textSize="15dp"
+        android:textIsSelectable="false" />
 
 
     <CheckBox
@@ -39,25 +38,57 @@
         android:layout_height="40dp"
         android:checked="false"
         android:text="Line"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignTop="@+id/setDataDuration"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/setDataType"
+        android:layout_above="@+id/datalist" />
 
     <Button
         android:id="@+id/setDataDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Duration\nAll"
-        android:layout_below="@+id/GraphData"
-        android:layout_toEndOf="@+id/line" />
+        android:layout_above="@+id/datalist"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView2" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Shake Type\nAll"
         android:id="@+id/setDataType"
-        android:layout_alignParentEnd="true"
         android:layout_above="@+id/datalist"
-        android:layout_below="@+id/GraphData" />
+        android:layout_toStartOf="@+id/setDataDuration"
+        android:layout_alignTop="@+id/line" />
+
+    <com.example.matthew.rehabfirsttry.Activities.CustomViewGraph
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/GraphData"
+        android:layout_alignEnd="@+id/datalist"
+        android:layout_toEndOf="@+id/textView"
+        android:visibility="visible"
+        android:focusable="false"
+        android:layout_below="@+id/pointInfo"
+        android:layout_alignStart="@+id/pointInfo"
+        android:layout_above="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\n\n\n\nShake\nCount"
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/GraphData"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duration"
+        android:id="@+id/textView2"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/GraphData"
+        android:layout_alignEnd="@+id/GraphData" />
 
 </RelativeLayout>
-

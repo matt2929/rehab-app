@@ -37,6 +37,13 @@ public class HistoryList extends Activity {
 
         WorkoutStrings.add("HistoryList\n");
         AllWorkOuts = serialize.getUsers(getApplicationContext());
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,85},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,70},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,65},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,62},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,61},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,6},"",50,true));
+
         for (WorkoutHistoricalData.WorkoutSession s : AllWorkOuts) {
             String hand = "";
             if (s.isLeftHand()) {
@@ -61,7 +68,7 @@ public class HistoryList extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                AllWorkOuts = serialize.getUsers(getApplicationContext());
+               // AllWorkOuts = serialize.getUsers(getApplicationContext());
                 workoutPosition = i - 1;
                 workoutName = AllWorkOuts.get(workoutPosition).getWorkoutName();
                 Intent intent = new Intent(getApplicationContext(), HistoryGraph.class);

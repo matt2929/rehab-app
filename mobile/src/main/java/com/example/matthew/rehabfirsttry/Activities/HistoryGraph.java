@@ -22,7 +22,7 @@ import java.util.Calendar;
 
 public class HistoryGraph extends AppCompatActivity {
 
-    GraphDataView graphDataView;
+    CustomViewGraph graphDataView;
     ListView listView;
     ArrayList<String> stringArrlist = new ArrayList<String>();
     ArrayList<Float> intArrlist = new ArrayList<Float>();
@@ -44,10 +44,13 @@ public class HistoryGraph extends AppCompatActivity {
                 sessions.add(HistoryList.AllWorkOuts.get(i));
             }
         }
+
         temp = new ArrayList<>(sessions);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_history_graph);
-        graphDataView = (GraphDataView) findViewById(R.id.GraphData);
+        graphDataView = (CustomViewGraph) findViewById(R.id.GraphData);
+        graphDataView.setVisibility(View.VISIBLE);
+        graphDataView.setBackgroundColor(Color.rgb(83,104,196));
         listView = (ListView) findViewById(R.id.datalist);
         textView = (TextView) findViewById(R.id.pointInfo);
         checkBox = (CheckBox) findViewById(R.id.line);
@@ -77,13 +80,24 @@ public class HistoryGraph extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                graphDataView.selectHighlightedData((intArrlist.size() - i) - 1);
-                textView.setText("Val:" + intArrlist.get(i) + " Pos: " + ((intArrlist.size() - i) - 1));
+                if (i == 0) {
+
+                } else {
+                    graphDataView.selectHighlightedData((intArrlist.size() - i) - 1);
+                    textView.setText("The selected workout had a total of " + (intArrlist.get(i-1)).intValue() + " shakes.");
+                }
             }
         });
     }
 
     public void setupViews() {
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,85},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,60},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,50},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,45},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,42},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,41},"",50,true));
+
         if (sessions.size() == 0) {
             textView.setText("There is no data within these parameters.");
         } else {
@@ -95,8 +109,11 @@ public class HistoryGraph extends AppCompatActivity {
             float start = 0;
             int biggest = Integer.MIN_VALUE;
             int smallest = Integer.MAX_VALUE;
+            stringArrlist.add("All \'"+sessions.get(0).getWorkoutName()+ "\' Activities:");
+
             for (int i = 0; i < sessions.size(); i++) {
                 WorkoutHistoricalData.WorkoutSession s = sessions.get(i);
+
                 if (currentShakeType == 0) {
                     start = (float) sessions.get(i).getShakeList()[3];
                 } else if (currentShakeType == 1) {
@@ -143,6 +160,13 @@ public class HistoryGraph extends AppCompatActivity {
 
     public void changeDuration() {
         sessions = new ArrayList<WorkoutHistoricalData.WorkoutSession>();
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,85},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,6},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,6},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,60},"",50,true));
+        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,6},"",50,true));
+
         switch (currentDuration) {
             case 0:
                 for (int i = 0; i < temp.size(); i++) {

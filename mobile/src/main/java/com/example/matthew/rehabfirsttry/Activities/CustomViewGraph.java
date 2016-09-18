@@ -7,12 +7,14 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
+import com.example.matthew.rehabfirsttry.R;
+
 import java.util.ArrayList;
 
 /**
- * Created by Matthew on 8/4/2016.
+ * Created by Matthew on 9/17/2016.
  */
-public class GraphDataView extends RelativeLayout {
+public class CustomViewGraph extends RelativeLayout {
     Integer Width = 0, Height = 0, HalfWidth = 0, HalfHeight = 0, OneQuarterWidth = 0, OneQuarterHeight = 0, ThreeQuarterWidth = 0, ThreeQuarterHeight = 0;
     Float GraphDiff = Float.valueOf(0);
     Float GraphMin = Float.valueOf(0);
@@ -24,29 +26,32 @@ public class GraphDataView extends RelativeLayout {
     Boolean bool = false;
     int Goal = 0;
 
-    public GraphDataView(Context context) {
+    public CustomViewGraph(Context context) {
         super(context);
 
         firstInitialValues();
     }
 
-    public GraphDataView(Context context, AttributeSet attrs) {
+    public CustomViewGraph(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         firstInitialValues();
     }
 
-    public GraphDataView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomViewGraph(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
         firstInitialValues();
     }
 
-    public GraphDataView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CustomViewGraph(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+
         firstInitialValues();
     }
 
     public void firstInitialValues() {
-        setBackgroundColor(Color.BLACK);
+    
         Width = getWidth();
         Height = getHeight();
         HalfWidth = (int) (((float) Width) * (float) (.5));
@@ -62,6 +67,8 @@ public class GraphDataView extends RelativeLayout {
         GreenPaint.setTextSize(40);
         RedPaint.setTextSize(40);
         RedPaint.setColor(Color.RED);
+        GreenPaint.setStrokeWidth(5);
+        WhitePaint.setStrokeWidth(4);
     }
 
     public void onDrawIntitialValues() {
@@ -103,10 +110,11 @@ public class GraphDataView extends RelativeLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         onDrawIntitialValues();
+        canvas = drawTheData(canvas);
         canvas = drawSingleIncrementLines(canvas);
         // canvas = drawHalfLines(canvas);
         // canvas = drawQuarterLines(canvas);
-        canvas = drawTheData(canvas);
+
         canvas = drawGoalLine(canvas);
     }
 
@@ -136,13 +144,14 @@ public class GraphDataView extends RelativeLayout {
     }
     public Canvas drawGoalLine(Canvas canvas){
         canvas.drawLine(0,((GraphDiff-Goal)/GraphDiff)*Height,Width,((GraphDiff-Goal)/GraphDiff)*Height,YellowPaint);
-    return canvas;
+        return canvas;
     }
 
     public Canvas drawTheData(Canvas canvas) {
         float spaceBetweenValuesX = ((float) Width / (float) numValues());
         float incrementX = 0;
         getDiff();
+
         for (int i = 0; i < numValues(); i++) {
             float val = Values.get(i);
             if (i == 0) {
@@ -153,7 +162,7 @@ public class GraphDataView extends RelativeLayout {
             float poportionalVal = ((GraphDiff - (val - GraphMin)) * Height) / (GraphDiff);
             //this is what the user clicked
             if (i == UserSelectedPoint) {
-                canvas.drawCircle(incrementX, poportionalVal, 20, RedPaint);
+                canvas.drawCircle(incrementX, poportionalVal, 29, YellowPaint);
             }
             if (bool) {
                 if ((i + 1) == numValues()) {
@@ -163,7 +172,7 @@ public class GraphDataView extends RelativeLayout {
                     canvas.drawLine(incrementX, poportionalVal, incrementX + spaceBetweenValuesX, poportionalVal2, GreenPaint);
                 }
             } else {
-                canvas.drawCircle(incrementX, poportionalVal, 10, GreenPaint);
+                canvas.drawCircle(incrementX, poportionalVal, 22, GreenPaint);
             }
         }
         return canvas;
@@ -203,7 +212,5 @@ public class GraphDataView extends RelativeLayout {
             }
         }
         return 2;
-    }
+    }}
 
-
-}
