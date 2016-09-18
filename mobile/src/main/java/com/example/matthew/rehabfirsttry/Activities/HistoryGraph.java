@@ -50,7 +50,7 @@ public class HistoryGraph extends AppCompatActivity {
         setContentView(R.layout.activity_workout_history_graph);
         graphDataView = (CustomViewGraph) findViewById(R.id.GraphData);
         graphDataView.setVisibility(View.VISIBLE);
-        graphDataView.setBackgroundColor(Color.rgb(83,104,196));
+        graphDataView.setBackgroundColor(Color.rgb(83,146,196));
         listView = (ListView) findViewById(R.id.datalist);
         textView = (TextView) findViewById(R.id.pointInfo);
         checkBox = (CheckBox) findViewById(R.id.line);
@@ -91,12 +91,6 @@ public class HistoryGraph extends AppCompatActivity {
     }
 
     public void setupViews() {
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,85},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,60},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,50},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,45},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,42},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,41},"",50,true));
 
         if (sessions.size() == 0) {
             textView.setText("There is no data within these parameters.");
@@ -160,12 +154,6 @@ public class HistoryGraph extends AppCompatActivity {
 
     public void changeDuration() {
         sessions = new ArrayList<WorkoutHistoricalData.WorkoutSession>();
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,85},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,6},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,6},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,60},"",50,true));
-        sessions.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,6},"",50,true));
 
         switch (currentDuration) {
             case 0:

@@ -37,12 +37,19 @@ public class HistoryList extends Activity {
 
         WorkoutStrings.add("HistoryList\n");
         AllWorkOuts = serialize.getUsers(getApplicationContext());
-        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,85},"",50,true));
-        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,70},"",50,true));
-        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,65},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,61},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,61},"",50,true));
         AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,62},"",50,true));
-        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,61},"",50,true));
-        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,6},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,67},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,80},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,100},"",50,true));
+
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,110},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,115},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,120},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,150},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,175},"",50,true));
+        AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,200},"",50,true));
 
         for (WorkoutHistoricalData.WorkoutSession s : AllWorkOuts) {
             String hand = "";
