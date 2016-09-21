@@ -43,7 +43,6 @@ public class HistoryList extends Activity {
         AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,67},"",50,true));
         AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{10,20,30,80},"",50,true));
         AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{1,2,3,100},"",50,true));
-
         AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{15,25,35,110},"",50,true));
         AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{13,23,32,115},"",50,true));
         AllWorkOuts.add(new WorkoutHistoricalData.WorkoutSession("Pickup",new int[]{12,22,32,120},"",50,true));

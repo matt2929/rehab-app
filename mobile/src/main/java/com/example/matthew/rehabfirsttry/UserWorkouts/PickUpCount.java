@@ -1,10 +1,13 @@
 package com.example.matthew.rehabfirsttry.UserWorkouts;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.text.format.Time;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.matthew.rehabfirsttry.Utilities.GripAnalysis;
+import com.example.matthew.rehabfirsttry.Utilities.JerkScoreAnalysis;
 import com.example.matthew.rehabfirsttry.Utilities.SampleAverage;
 import com.example.matthew.rehabfirsttry.Utilities.WorkoutShakeTrack;
 
@@ -36,6 +39,11 @@ public class PickUpCount implements WorkoutSession {
     boolean hasStarted = false;
     WorkoutShakeTrack workoutShakeTrack = new WorkoutShakeTrack();
     long startOfWorkoutForGrade = System.currentTimeMillis();
+
+    //Jerk Stuff
+    JerkScoreAnalysis jerkScoreAnalysis = new JerkScoreAnalysis(3);
+    long jerkStartTime =System.currentTimeMillis();
+
     public PickUpCount() {
         startTime.setToNow();
     }
@@ -49,7 +57,7 @@ public class PickUpCount implements WorkoutSession {
                 shouldITalk=true;
                 Log.e("said","it");
             } else {
-
+                jerkScoreAnalysis.jerkAdd(accX,accY,accZ);
                 workoutShakeTrack.analyseData(accX, accY, accZ);
                 float differenceVAL = Math.abs(accY - countPickupLastVal);
                 a = differenceVAL;
@@ -64,6 +72,8 @@ public class PickUpCount implements WorkoutSession {
                     shouldITalk = true;
                     pickupCount++;
                     whatToSay = "" + pickupCount;
+                    jerkScoreAnalysis.jerkCompute(Math.abs(System.currentTimeMillis()-jerkStartTime));
+                    jerkStartTime= System.currentTimeMillis();
                     inMotion = false;
                     imOnLowerSurface = !imOnLowerSurface;
                 } else if (sampleAverage.getMedianAverage() > .5 && !inMotion) {
@@ -74,15 +84,7 @@ public class PickUpCount implements WorkoutSession {
 
     @Override
     public int getGrade() {
-        long differenceTime= (Math.abs((Math.abs(System.currentTimeMillis()-startOfWorkoutForGrade))-40000));
-        Log.e("time",""+differenceTime);
-        int punishment = (int)(((differenceTime))/1000);
-        Log.e("punish",""+punishment);
-        if(punishment>=100){
-            return 0;
-        }else{
-            return 100-punishment;
-        }
+       return jerkScoreAnalysis.getJerkAverage().intValue();
     }
 
     @Override

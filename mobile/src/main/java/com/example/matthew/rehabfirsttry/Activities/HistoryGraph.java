@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.matthew.rehabfirsttry.R;
+import com.example.matthew.rehabfirsttry.Utilities.JerkScoreAnalysis;
 import com.example.matthew.rehabfirsttry.Utilities.WorkoutHistoricalData;
 
 import java.util.ArrayList;
