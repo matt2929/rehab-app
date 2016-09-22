@@ -18,7 +18,7 @@ public class JerkScoreAnalysis {
     }
 
     public void jerkCompute(float time){
-        jerkSave.add((float)Math.pow(((.5f*(accelerationTotal)*(Math.pow(time,5)/Math.pow(Height,2)))),.5f));
+        jerkSave.add(((float)Math.pow(((.5f*(accelerationTotal)*(Math.pow(time/1000,5)/Math.pow(Height,2)))),.5f)));
     }
 
     public ArrayList<Float> getAllJerks(){
